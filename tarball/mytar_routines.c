@@ -14,8 +14,7 @@ extern char *use;
  *
  * Returns the number of bytes actually copied or -1 if an error occured.
  */
-int
-copynFile(FILE * origin, FILE * destination, int nBytes)
+int copynFile(FILE * origin, FILE * destination, int nBytes)
 {
 	int cont = 0;
 	int c;
@@ -38,8 +37,7 @@ copynFile(FILE * origin, FILE * destination, int nBytes)
  * 
  * Returns: !=NULL if success, NULL if error
  */
-char
-*loadstr(FILE * file)
+char *loadstr(FILE * file)
 {
     // Count the number of bytes of the string
     int numBytes = 0;
@@ -132,8 +130,7 @@ stHeaderEntry* readHeader(FILE *tarFile, int *nFiles)
  * pairs occupy strlen(name)+1 bytes.
  *
  */
-int
-createTar(int nFiles, char *fileNames[], char tarName[])
+int createTar(int nFiles, char *fileNames[], char tarName[])
 {
 	FILE *tar;
 	stHeaderEntry *header;
@@ -234,8 +231,7 @@ createTar(int nFiles, char *fileNames[], char tarName[])
  * stored in the data section of the tarball.
  *
  */
-int
-extractTar(char tarName[])
+int extractTar(char tarName[])
 {
 	FILE *tar;
 	FILE *outFile;
