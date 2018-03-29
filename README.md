@@ -16,7 +16,7 @@ To run this program import the tarball folder in your eclipse C project or run i
 
 <b>Creates a tarball</b>
 ```
--cf tarball.mtar inputFile1 inputFile2 inputFile3 ...
+-cf tarball.mtar pathInputFile1 pathInputFile2 pathInputFile3 ...
 ```
 <b>Extracts files from a tarball</b>
 ```
