@@ -10,3 +10,15 @@ A tarball is a computer software utility for collecting many files into one arch
 It begins with the path and the size of each file and continues with the data region
 ![tar](https://user-images.githubusercontent.com/36489953/38105095-61a89274-338b-11e8-8a34-12ff8cab2c91.PNG)
 
+## Usage
+
+To execute this program import the tarball folder in your eclipse project
+
+<b>Creates a tarball</b>
+
+-cf tarball.mtar inputFile1 inputFile2 inputFile3 ...
+
+<b>Extracts files from a tarball</b>
+
+-xf tarball.mtar
+
