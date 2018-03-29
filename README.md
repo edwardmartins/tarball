@@ -1,5 +1,7 @@
 # Tarball
 <b>C</b> program that can <b>create</b> a Tarball and also <b>extract</b> files from it
+
+You can find the create and extract functions in <b>mytar_routines.c</b>
 ## What is a tarball
 A tarball is a computer software utility for collecting many files into one archive file
 
