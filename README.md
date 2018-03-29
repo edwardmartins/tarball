@@ -12,7 +12,7 @@ It begins with the path and the size of each file and continues with the data re
 
 ## Usage
 
-To run this program import the tarball folder in your eclipse C project
+To run this program import the tarball folder in your eclipse C project or run it directly from the terminal
 
 <b>Creates a tarball</b>
 
