@@ -41,7 +41,7 @@ copynFile(FILE * origin, FILE * destination, int nBytes)
 char
 *loadstr(FILE * file)
 {
-    // count the number of bytes of the string
+    // Count the number of bytes of the string
     int numBytes = 0;
     char c;
     while(( c = getc(file)) != '\0' && c != EOF){
@@ -57,13 +57,13 @@ char
     // File pointer to the beginning of the file
     fseek(file,-numBytes,SEEK_CUR);
 
-    // reserve memory for the string
+    // Reserve memory for the string
     char *str;
     if((str = malloc (sizeof(char) * numBytes)) == NULL){
     	return NULL;
     }
 
-    // read the string and fills str
+    // Read the string and fills str
     fread(str,sizeof(char),numBytes,file);
 
     return str;
@@ -82,10 +82,10 @@ char
 stHeaderEntry* readHeader(FILE *tarFile, int *nFiles)
 {
 
-	// read the number of files of the tar
+	// Read the number of files of the tar
 	fread(nFiles,sizeof(int),1,tarFile);
 
-	// reserve memory for the header
+	// Reserve memory for the header
 	stHeaderEntry *header;
 	if((header=  malloc(sizeof(stHeaderEntry) * (*nFiles))) == NULL){
 		perror("cannot reserve memory for header");
@@ -95,7 +95,7 @@ stHeaderEntry* readHeader(FILE *tarFile, int *nFiles)
 
 	int i,j;
 	for( i = 0; i < *nFiles; i++){
-		// fill the name of each file
+		// Save the name of each file
 		if((header[i].name = loadstr(tarFile)) == NULL){
 			for(j = 0; j < *nFiles; j++){
 				free(header[j].name);
@@ -104,7 +104,7 @@ stHeaderEntry* readHeader(FILE *tarFile, int *nFiles)
 			fclose(tarFile);
 			return NULL;
 		}
-		// fill the size of each file
+		// Save the size of each file
 		fread(&header[i].size,sizeof(unsigned int),1,tarFile);
 	}
 
@@ -162,7 +162,7 @@ createTar(int nFiles, char *fileNames[], char tarName[])
 		header[i].name = malloc(sizeof(strlen(fileNames[i]) + 1));
 	}
 	
-	// Header = sizeNames + (int) to save the size of each file
+	// Header = sizeNames + numberOfFiles * (int) to save the size of each file
 	sizeOfHeader = sizeOfNames + (nFiles * sizeof(int));
 
 	// File position to the data region
