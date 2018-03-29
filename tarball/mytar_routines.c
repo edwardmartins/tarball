@@ -190,7 +190,7 @@ createTar(int nFiles, char *fileNames[], char tarName[])
 		fclose(inputFile); // cierro el fichero
 	}
 
-	// mueve el indicador de posición del fichero al principio del fichero
+	// mueve el indicador de posición del fichero al inicio del tarball
 	rewind(tar);
 
 	// Escribimos el numero de ficheros
