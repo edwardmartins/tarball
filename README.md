@@ -5,10 +5,10 @@ You can find the create and extract functions in <b>mytar_routines.c</b>
 
 To run this project in eclipse, import the tarball folder to your eclipse project and as arguments use:
 
-## create
+<b>create</b>
 -cf tarFile.mtar inputFile1 inputFile2 inputFile3 ...
 
-## extract
+<b>extract</b>
 -xf tarfile.mtar
 
 ## What is a tarball
