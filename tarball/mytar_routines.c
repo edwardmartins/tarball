@@ -41,7 +41,7 @@ copynFile(FILE * origin, FILE * destination, int nBytes)
 char
 *loadstr(FILE * file)
 {
-    // contamos el numero de bytes del string
+    // count the number of bytes of the string
     int numBytes = 0;
     char c;
     while(( c = getc(file)) != '\0' && c != EOF){
@@ -51,19 +51,19 @@ char
     if(c == EOF)
     	return NULL;
 
-    // +1 para añadir el byte '\0'
+    // +1 to add byte '\0'
     numBytes++;
 
-    // volvemos al inicio del fichero
+    // come back to the beginning of the file
     fseek(file,-numBytes,SEEK_CUR);
 
-    // reservamos memoria para el string
+    // reserve memory for the string
     char *str;
     if((str = malloc (sizeof(char) * numBytes)) == NULL){
     	return NULL;
     }
 
-    // cargamos el string
+    // read the string and fills str
     fread(str,sizeof(char),numBytes,file);
 
     return str;
@@ -82,10 +82,10 @@ char
 stHeaderEntry* readHeader(FILE *tarFile, int *nFiles)
 {
 
-	// leemos el numero de archivos que tiene el tar
+	// read the number of files of the tar
 	fread(nFiles,sizeof(int),1,tarFile);
 
-	// reservamos memoria para la cabecera
+	// reserve memory for the header
 	stHeaderEntry *cabecera;
 	if((cabecera =  malloc(sizeof(stHeaderEntry) * (*nFiles))) == NULL){
 		perror("error al reservar memoria en la cabecera");
@@ -95,9 +95,8 @@ stHeaderEntry* readHeader(FILE *tarFile, int *nFiles)
 
 	int i,j;
 	for( i = 0; i < *nFiles; i++){
-		// cargamos el nombre de cada archivo en la cabecera
+		// fill the name of each file
 		if((cabecera[i].name = loadstr(tarFile)) == NULL){
-			// liberamos memoria ante un error
 			for(j = 0; j < *nFiles; j++){
 				free(cabecera[j].name);
 			}
@@ -105,7 +104,7 @@ stHeaderEntry* readHeader(FILE *tarFile, int *nFiles)
 			fclose(tarFile);
 			return NULL;
 		}
-		// cargamos el tamaño de cada archivo en la cabecera
+		// fill the size of each file
 		fread(&cabecera[i].size,sizeof(unsigned int),1,tarFile);
 	}
 
@@ -140,39 +139,41 @@ createTar(int nFiles, char *fileNames[], char tarName[])
 	stHeaderEntry *cabecera;
 	int i,j;
 
-	// Abrimos tarfile
+	// Open the tarball
 	if((tar = fopen(tarName,"w")) == NULL){
 		perror("error al abrir el tarFile");
 		return EXIT_FAILURE;
 	}
 
-	// Reservamos espacio para la cabecera
+	// Reserve memory for the header
 	if((cabecera = malloc(sizeof(stHeaderEntry)* nFiles)) == NULL){
 		perror("error al reservar memoria de la cabecera");
 		return EXIT_FAILURE;
 	}
 
-	// Calculamos el tamaño de la cabecera para poder posicionarnos en la region de datos
-	int tamNombres = sizeof(int); // primer entero que guarda el numero de ficheros
+	// Calculate the size of the header
+	// First we add an in(represents the number of files in the tarball)
+	int tamNombres = sizeof(int); 
 	int tamCabecera;
 
-	// Suma de las longitudes de los nombres
+	// Sum of name's size
 	for(i = 0; i < nFiles; i++){
 		tamNombres += strlen(fileNames[i]) + 1;
 		cabecera[i].name = malloc(sizeof(strlen(fileNames[i]) + 1));
 	}
-	// Tamaño de los nombres + entero que guarda el tamaño de cada fichero
+	
+	// Header = sizeNames + (int) to save the size of each file
 	tamCabecera = tamNombres + (nFiles * sizeof(int));
 
-	// Nos posicionamos en el byte del fichero donde comienza la region de datos
+	// File position to the data region
 	fseek(tar,tamCabecera,SEEK_SET);
 
-	// Copiamos el contenido de cada fichero(inputFile) en el tar
+	// Copy the content of each file into the tar
 	FILE *inputFile;
 	for(j = 0; j < nFiles; j++){
 
 		if((inputFile = fopen(fileNames[j],"r")) == NULL){
-			// liberamos memoria ante un error
+			
 			for(j = 0; j < nFiles; j++){
 				free(cabecera[j].name);
 			}
@@ -181,39 +182,39 @@ createTar(int nFiles, char *fileNames[], char tarName[])
 			perror("error de apertura del fichero");
 			return EXIT_FAILURE;
 		}
-		// Copia el fichero y devuelve el numero de bytes copiados
+		// Copy the content into the tar
 		int numBytes = copynFile(inputFile,tar,INT_MAX);
 
-		// Cargamos la cabecera
-		cabecera[j].size = numBytes; // copio el tamaño del fichero en la cabecera
-		strcpy(cabecera[j].name, fileNames[j]); // copio el nombre en la cabecera
-		fclose(inputFile); // cierro el fichero
+		// Saves the header
+		cabecera[j].size = numBytes; 
+		strcpy(cabecera[j].name, fileNames[j]); 
+		fclose(inputFile); 
 	}
 
-	// mueve el indicador de posición del fichero al inicio del tarball
+	// File position to the beginning of the tarball
 	rewind(tar);
 
-	// Escribimos el numero de ficheros
+	// write the number of files in the tarball
 	fwrite(&nFiles,sizeof(int),1,tar);
 
 	int z;
 	for(z = 0; z < nFiles; z++){
 
-		// Volcamos los nombres al tar
+		// Writes the name os each file into the tarball
 		fwrite(cabecera[z].name,sizeof(char),strlen(cabecera[z].name) + 1 ,tar);
 
-		// Volcamos los tamaños de los archivos al tar
+		// Writes the size of each file into the tarball
 		fwrite(&cabecera[z].size,sizeof(unsigned int),1,tar);
 
 	}
 
-	// liberamos memoria
+	// Free memory
 	for(j = 0; j < nFiles; j++){
 		free(cabecera[j].name);
 	}
 	free(cabecera);
 
-	// cerramos
+	// Close
 	fclose(tar);
 
 	printf("Tar creado con exito\n");
@@ -241,13 +242,13 @@ extractTar(char tarName[])
 	FILE *outFile;
 	int i, j;
 
-	// Abrimos el tar
+	// Open the tar
 	if((tar = fopen(tarName,"r")) == NULL){
 		perror("No se puede abrir el fichero tar");
 		return EXIT_FAILURE;
 	}
 
-	// Cargamos la cabecera
+	// Loads the header
 	int numFiles;
 	stHeaderEntry *cabecera;
 	if((cabecera = readHeader(tar, &numFiles)) == NULL){
@@ -255,10 +256,10 @@ extractTar(char tarName[])
 	}
 
 
-	// Extraemos los ficheros
+	// Extracts the files
 	for(i = 0; i < numFiles; i++){
 		if((outFile = fopen(cabecera[i].name, "w")) == NULL){
-			// liberamos memoria ante un error
+			
 			for(j = 0; j < numFiles; j++){
 				free(cabecera[j].name);
 			}
@@ -270,13 +271,13 @@ extractTar(char tarName[])
 		fclose(outFile);
 	}
 
-	// Liberamos memoria
+	// LFree memory
 	for(j = 0; j < numFiles; j++){
 		free(cabecera[j].name);
 	}
 	free(cabecera);
 
-	// cerramos
+	// Close
 	fclose(tar);
 
 	printf("Tar extraido con exito\n");
