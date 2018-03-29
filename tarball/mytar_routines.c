@@ -141,13 +141,13 @@ createTar(int nFiles, char *fileNames[], char tarName[])
 
 	// Open the tarball
 	if((tar = fopen(tarName,"w")) == NULL){
-		perror("error al abrir el tarFile");
+		perror("Cannot open the tarFile");
 		return EXIT_FAILURE;
 	}
 
 	// Reserve memory for the header
 	if((header = malloc(sizeof(stHeaderEntry)* nFiles)) == NULL){
-		perror("error al reservar memoria de la cabecera");
+		perror("Cannot reserve memory for the header");
 		return EXIT_FAILURE;
 	}
 
