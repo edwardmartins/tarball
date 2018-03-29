@@ -280,6 +280,6 @@ extractTar(char tarName[])
 	// Close
 	fclose(tar);
 
-	printf("Tar extracted successfully\n");
+	printf("Tarball extracted successfully\n");
 	return EXIT_SUCCESS;
 }
