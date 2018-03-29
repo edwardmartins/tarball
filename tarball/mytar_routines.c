@@ -171,7 +171,7 @@ createTar(int nFiles, char *fileNames[], char tarName[])
 	// Copy the content of each file into the tar
 	FILE *inputFile;
 	for(j = 0; j < nFiles; j++){
-
+		// Open each file
 		if((inputFile = fopen(fileNames[j],"r")) == NULL){
 			for(j = 0; j < nFiles; j++){
 				free(header[j].name);
