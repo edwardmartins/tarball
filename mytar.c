@@ -4,7 +4,7 @@
        
 #include "mytar.h"
        
-char use[]="Usage: tar -c|x -f file_mytar [file1 file2 ...]\n";
+char use[]="Usage: -c|x -f file_mytar [file1 file2 ...]\n";
 
 int main(int argc, char *argv[]) {
 
