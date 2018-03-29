@@ -15,8 +15,6 @@ It begins with the path and the size of each file and continues with the data re
 To run this program import the tarball folder in your eclipse C project or run it directly from the terminal
 
 <b>Creates a tarball</b>
-
-Don't forget to create the files(inputFile1,inputFile2,...) in your working directory before running the program
 ```
 -cf tarball.mtar inputFile1 inputFile2 inputFile3 ...
 ```
