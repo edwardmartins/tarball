@@ -152,7 +152,7 @@ createTar(int nFiles, char *fileNames[], char tarName[])
 	}
 
 	// Calculate the size of the header
-	// First we add an in(represents the number of files in the tarball)
+	// First we add an int(represents the number of files in the tarball)
 	int sizeOfNames = sizeof(int);
 	int sizeOfHeader;
 
@@ -179,7 +179,7 @@ createTar(int nFiles, char *fileNames[], char tarName[])
 			}
 			free(header);
 			fclose(tar);
-			perror("error de apertura del fichero");
+			perror("Cannot open inputFile");
 			return EXIT_FAILURE;
 		}
 		// Copy the content into the tar
@@ -194,16 +194,16 @@ createTar(int nFiles, char *fileNames[], char tarName[])
 	// File position to the beginning of the tarball
 	rewind(tar);
 
-	// write the number of files in the tarball
+	// Write the number of files at the top of the tarball
 	fwrite(&nFiles,sizeof(int),1,tar);
 
 	int z;
 	for(z = 0; z < nFiles; z++){
 
-		// Writes the name os each file into the tarball
+		// Write the name of each file into the tarball
 		fwrite(header[z].name,sizeof(char),strlen(header[z].name) + 1 ,tar);
 
-		// Writes the size of each file into the tarball
+		// Write the size of each file into the tarball
 		fwrite(&header[z].size,sizeof(unsigned int),1,tar);
 
 	}
@@ -242,7 +242,7 @@ extractTar(char tarName[])
 	FILE *outFile;
 	int i, j;
 
-	// Open the tar
+	// Open the tarball
 	if((tar = fopen(tarName,"r")) == NULL){
 		perror("Cannot open the tarball");
 		return EXIT_FAILURE;
