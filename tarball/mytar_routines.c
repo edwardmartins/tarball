@@ -54,7 +54,7 @@ char
     // +1 to add byte '\0'
     numBytes++;
 
-    // comeback to the beginning of the file
+    // File pointer to the beginning of the file
     fseek(file,-numBytes,SEEK_CUR);
 
     // reserve memory for the string
