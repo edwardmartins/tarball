@@ -93,7 +93,7 @@ stHeaderEntry* readHeader(FILE *tarFile, int *nFiles)
 
 	int i,j;
 	for( i = 0; i < *nFiles; i++){
-		// Save the name of each file
+		// Read the name of each file
 		if((header[i].name = loadstr(tarFile)) == NULL){
 			for(j = 0; j < *nFiles; j++){
 				free(header[j].name);
@@ -102,7 +102,7 @@ stHeaderEntry* readHeader(FILE *tarFile, int *nFiles)
 			fclose(tarFile);
 			return NULL;
 		}
-		// Save the size of each file
+		// Read the size of each file
 		fread(&header[i].size,sizeof(unsigned int),1,tarFile);
 	}
 
