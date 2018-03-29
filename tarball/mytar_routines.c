@@ -184,7 +184,7 @@ createTar(int nFiles, char *fileNames[], char tarName[])
 		// Copy the content into the tar
 		int numBytes = copynFile(inputFile,tar,INT_MAX);
 
-		// Saves the header
+		// Save the header
 		header[j].size = numBytes;
 		strcpy(header[j].name, fileNames[j]);
 		fclose(inputFile); 
@@ -257,8 +257,8 @@ extractTar(char tarName[])
 
 	// Extracts the files
 	for(i = 0; i < numFiles; i++){
+		// Open each file
 		if((outFile = fopen(header[i].name, "w")) == NULL){
-			
 			for(j = 0; j < numFiles; j++){
 				free(header[j].name);
 			}
@@ -266,6 +266,7 @@ extractTar(char tarName[])
 			fclose(tar);
 			return EXIT_FAILURE;
 		}
+		// Extract
 		copynFile(tar,outFile,header[i].size);
 		fclose(outFile);
 	}
