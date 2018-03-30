@@ -149,7 +149,7 @@ int createTar(int nFiles, char *fileNames[], char tarName[])
 	}
 
 	// Calculate the size of the header
-	// First we add an int(represents the number of files in the tarball)
+	// sizeof(int) = space to save the number of files the tarball has
 	int sizeOfNames = sizeof(int);
 	int sizeOfHeader;
 
