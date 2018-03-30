@@ -159,7 +159,7 @@ int createTar(int nFiles, char *fileNames[], char tarName[])
 		header[i].name = malloc(sizeof(strlen(fileNames[i]) + 1));
 	}
 	
-	// Header = sizeNames + numberOfFiles * (int) to save the size of each file
+	// Header = sizeNames + numberOfFiles * (int) to have space to save the size of each file
 	sizeOfHeader = sizeOfNames + (nFiles * sizeof(int));
 
 	// File position to the data region
