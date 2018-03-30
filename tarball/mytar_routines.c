@@ -12,7 +12,7 @@ extern char *use;
  * destination:  pointer to the FILE descriptor associated with the destination file
  * nBytes: number of bytes to copy
  *
- * Returns the number of bytes actually copied or -1 if an error occured.
+ * Returns the number of bytes actually copied.
  */
 int copynFile(FILE * origin, FILE * destination, int nBytes)
 {
