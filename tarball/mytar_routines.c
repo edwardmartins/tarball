@@ -86,7 +86,7 @@ stHeaderEntry* readHeader(FILE *tarFile, int *nFiles)
 	// Reserve memory for the header
 	stHeaderEntry *header;
 	if((header=  malloc(sizeof(stHeaderEntry) * (*nFiles))) == NULL){
-		perror("cannot reserve memory for header");
+		perror("Cannot reserve memory for the header");
 		fclose(tarFile);
 		return NULL;
 	}
