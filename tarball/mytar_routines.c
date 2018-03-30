@@ -262,7 +262,7 @@ int extractTar(char tarName[])
 			fclose(tar);
 			return EXIT_FAILURE;
 		}
-		// Extract
+		// Copy the data
 		copynFile(tar,outFile,header[i].size);
 		fclose(outFile);
 	}
