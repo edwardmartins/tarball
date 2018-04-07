@@ -210,7 +210,7 @@ int createTar(int nFiles, char *fileNames[], char tarName[])
 	// Close
 	fclose(tar);
 
-	printf("Tarball created successfully\n");
+	printf("Tarball successfully created\n");
 	return EXIT_SUCCESS;
 }
 
@@ -273,6 +273,6 @@ int extractTar(char tarName[])
 	// Close
 	fclose(tar);
 
-	printf("Tarball extracted successfully\n");
+	printf("Tarball successfully extracted\n");
 	return EXIT_SUCCESS;
 }
