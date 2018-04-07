@@ -195,13 +195,10 @@ int createTar(int nFiles, char *fileNames[], char tarName[])
 
 	int z;
 	for(z = 0; z < nFiles; z++){
-
 		// Write the name of each file into the tarball
 		fwrite(header[z].name,sizeof(char),strlen(header[z].name) + 1 ,tar);
-
 		// Write the size of each file into the tarball
 		fwrite(&header[z].size,sizeof(unsigned int),1,tar);
-
 	}
 
 	// Free memory
