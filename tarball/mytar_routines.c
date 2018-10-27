@@ -45,12 +45,11 @@ char *loadstr(FILE * file)
     while(( c = getc(file)) != '\0' && c != EOF){
         numBytes++;
     }
+    // +1 to add byte '\0'
+    numBytes++;
 
     if(c == EOF)
     	return NULL;
-
-    // +1 to add byte '\0'
-    numBytes++;
 
     // File pointer to the beginning of the file
     fseek(file,-numBytes,SEEK_CUR);
@@ -146,7 +145,7 @@ int createTar(int nFiles, char *fileNames[], char tarName[])
 	}
 
 	// Calculate the size of the header
-	// sizeof(int) = space to save the number of files the tarball has
+	// sizeof(int) = integer to save the number of files the tarball has
 	int sizeOfNames = sizeof(int);
 	int sizeOfHeader;
 
@@ -156,7 +155,7 @@ int createTar(int nFiles, char *fileNames[], char tarName[])
 		header[i].name = malloc(sizeof(strlen(fileNames[i]) + 1));
 	}
 	
-	// Header = sizeNames + space to save the size of each file
+	// Header = sizeNames + integer to save the size of each file
 	sizeOfHeader = sizeOfNames + (nFiles * sizeof(int));
 
 	// File position to the data region
@@ -196,9 +195,6 @@ int createTar(int nFiles, char *fileNames[], char tarName[])
 	}
 
 	// Free memory
-	for(j = 0; j < nFiles; j++){
-		free(header[j].name);
-	}
 	free(header);
 
 	// Close
