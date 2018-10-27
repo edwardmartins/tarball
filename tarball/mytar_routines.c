@@ -95,9 +95,6 @@ stHeaderEntry* readHeader(FILE *tarFile, int *nFiles)
 	for( i = 0; i < *nFiles; i++){
 		// Read the name of each file
 		if((header[i].name = loadstr(tarFile)) == NULL){
-			for(j = 0; j < *nFiles; j++){
-				free(header[j].name);
-			}
 			free(header);
 			fclose(tarFile);
 			return NULL;
@@ -170,9 +167,6 @@ int createTar(int nFiles, char *fileNames[], char tarName[])
 	for(j = 0; j < nFiles; j++){
 		// Open each file
 		if((inputFile = fopen(fileNames[j],"r")) == NULL){
-			for(j = 0; j < nFiles; j++){
-				free(header[j].name);
-			}
 			free(header);
 			fclose(tar);
 			perror("Cannot open inputFile");
@@ -252,9 +246,6 @@ int extractTar(char tarName[])
 	for(i = 0; i < numFiles; i++){
 		// Open each file
 		if((outFile = fopen(header[i].name, "w")) == NULL){
-			for(j = 0; j < numFiles; j++){
-				free(header[j].name);
-			}
 			free(header);
 			fclose(tar);
 			return EXIT_FAILURE;
@@ -265,9 +256,6 @@ int extractTar(char tarName[])
 	}
 
 	// Free memory
-	for(j = 0; j < numFiles; j++){
-		free(header[j].name);
-	}
 	free(header);
 
 	// Close
